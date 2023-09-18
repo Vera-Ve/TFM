@@ -1,0 +1,16 @@
+.mat-form-field-container {
+    display: inline-block;
+    width: calc(50% - 16px); /* 50% width with some margin */
+    margin-right: 16px; /* Add some margin between columns */
+    vertical-align: top; /* Align fields to the top */
+  }
+  
+  @media (max-width: 768px) {
+    /* Adjust layout for smaller screens */
+    .mat-form-field-container {
+      width: 100%; /* On smaller screens, use full width */
+      margin-right: 0; /* No margin between columns */
+      margin-bottom: 16px; /* Add margin between rows */
+    }
+  }
+  

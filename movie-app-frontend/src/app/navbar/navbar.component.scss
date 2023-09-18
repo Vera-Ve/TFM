@@ -1,0 +1,11 @@
+.mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  
+  .navbar-buttons {
+    display: flex;
+    gap: 10px; /* Espaciado entre botones si deseas agregar espacio entre ellos */
+    align-items: center;
+  }

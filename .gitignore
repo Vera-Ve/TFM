@@ -1,0 +1,4 @@
+/movie-app-frontend/dist/
+/movie-app-frontend/node_modules/
+/movie-app-frontend/.vscode/
+/movie_app_backend/env/

@@ -1,0 +1,16 @@
+<div class="auth-container container center">
+    <h2>Registro de Usuario</h2>
+    <form (ngSubmit)="register()">
+      <mat-form-field class="full-width">
+        <input matInput type="email" placeholder="Correo electrónico" [(ngModel)]="email" name="email" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required>
+      </mat-form-field>
+  
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div> <!-- Muestra el mensaje de error si existe -->
+  
+      <button type="submit" mat-raised-button color="primary">Registrarse</button>
+    </form>
+  </div>
+  

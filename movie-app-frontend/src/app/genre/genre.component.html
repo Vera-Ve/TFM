@@ -1,0 +1,33 @@
+<div class="subscription-container container center">
+  <app-navbar></app-navbar>
+    <h2>Choose Your Genres</h2>
+    <form (ngSubmit)="saveAndNavigate()">
+<span>
+    <mat-checkbox [checked]="selectAll"  
+                  [indeterminate]="someComplete()"
+                  (change)="setSelectAll($event.checked)">
+    Select All
+  </mat-checkbox></span>
+<span>
+        <ul>
+            <li *ngFor="let genre of genres; let i = index">
+             
+  
+        <mat-checkbox [name]="'genre_' + i" [(ngModel)]="genres[i].selected"  (ngModelChange)="updateSelectAll()">
+          {{ genre.name }}
+        </mat-checkbox>
+        
+    </li>
+</ul>
+</span>
+      
+  
+  
+      
+  
+  
+      <button mat-raised-button color="primary" type="submit">Siguiente</button>
+     
+    </form>
+  </div>
+  

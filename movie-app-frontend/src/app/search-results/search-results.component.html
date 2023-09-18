@@ -1,0 +1,43 @@
+<div *ngIf="filteredMovies.length > 0" class="container center">
+  <app-navbar></app-navbar>
+  
+    <h2>{{ filteredMovies[currentMovieIndex].title }}</h2>
+    <div class="button-container">
+     
+
+      <button (click)="addToBlacklist(filteredMovies[currentMovieIndex].id)" mat-mini-fab class="hide-button" aria-label="No mostrar nunca más"
+      matTooltip="No mostrar nunca más">
+      
+        <mat-icon>cancel</mat-icon>
+      </button>
+      <button (click)="addToWatchlist(filteredMovies[currentMovieIndex].id)" mat-mini-fab class="favorite-button" aria-label="Agregar a favoritos" 
+      matTooltip="Agregar a watchlist"
+       >
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </div>
+    <div class="movie-container">
+    
+    <button mat-icon-button class="round-button" (click)="showPreviousMovie()">
+        <mat-icon aria-label="Anterior">keyboard_arrow_left</mat-icon>
+      </button>
+    <img [src]="'https://image.tmdb.org/t/p/w500/'+filteredMovies[currentMovieIndex].poster_path" alt="Movie Poster" />
+      
+      <button mat-icon-button class="round-button" (click)="showNextMovie()">
+        <mat-icon aria-label="Siguiente">keyboard_arrow_right</mat-icon>
+      </button>
+  </div>
+  <p>{{ filteredMovies[currentMovieIndex].overview }}</p>
+  <p>Average vote:{{ filteredMovies[currentMovieIndex].vote_average}}</p>
+  <p>Popularity:{{ filteredMovies[currentMovieIndex].popularity}}</p>
+  <p>Géneros:
+    <span *ngFor="let genreId of filteredMovies[currentMovieIndex].genre_ids">
+      {{ getGenreName(genreId) }}
+    </span>
+  </p>
+
+</div>
+
+
+
+  

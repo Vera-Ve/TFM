@@ -1,0 +1,52 @@
+.movie-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Espacio entre la imagen y el texto */
+  }
+
+.round-button {
+    width: 48px; /* Ajusta el tamaño según tus necesidades */
+    height: 48px; /* Ajusta el tamaño según tus necesidades */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    top: 10px; /* Ajusta la posición vertical según tus necesidades */
+    right: 10px; /* Ajusta la posición horizontal según tus necesidades */
+  }
+  
+  .favorite-button {
+    background-color: #FF5733; /* Cambia el color de fondo según tus preferencias */
+    margin-left: 255px;
+  }
+  
+  .hide-button {
+    background-color: #333; /* Cambia el color de fondo según tus preferencias */
+    margin-right: 255px;
+  }
+
+  .favorite-text {
+    position: absolute;
+    top: 0;
+    left: calc(100% + 10px); /* Coloca el texto a la derecha del botón */
+    transform: translateY(-50%); /* Centra verticalmente el texto */
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: white;
+    font-size: 12px;
+    opacity: 0; /* Inicialmente, oculta el texto */
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .favorite-button:focus .favorite-text {
+    opacity: 1; /* Muestra el texto al hacer foco en el botón */
+  }
+  

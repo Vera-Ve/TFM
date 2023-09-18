@@ -1,0 +1,21 @@
+<div class="duration-container container center">
+  <app-navbar></app-navbar>
+    <h2>Choose Movie Duration</h2>
+    <form [formGroup]="durationForm" (ngSubmit)="saveAndNavigate()">
+        <div class="mat-form-field-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Minimum Duration (minutes)</mat-label>
+        <input matInput type="number" formControlName="minDuration">
+      </mat-form-field>
+    </div>
+    <div class="mat-form-field-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Maximum Duration (minutes)</mat-label>
+        <input matInput type="number" formControlName="maxDuration">
+      </mat-form-field>
+    </div>
+      
+      <button mat-raised-button color="primary" type="submit">Next</button>
+    </form>
+  </div>
+  

@@ -1,0 +1,43 @@
+<div class="subscription-container container center">
+  <app-navbar></app-navbar>
+  <h2>Choose Your Streaming Platforms</h2>
+  <form (ngSubmit)="saveAndNavigate()">
+  <mat-form-field>
+      
+    <mat-label>Select Platforms</mat-label>
+      <mat-chip-grid #chipGrid aria-label="Platform selection">
+        <mat-chip-row
+          *ngFor="let platform of selectedPlatforms"
+          
+          
+          (removed)="removeChip(platform)"
+        >
+          {{ platform.provider_name }}
+          <button matChipRemove [attr.aria-label]="'remove ' + platform.provider_name ">
+            <mat-icon>cancel</mat-icon>
+          </button>
+          </mat-chip-row>
+        
+      </mat-chip-grid>
+        
+        <input
+          #platformInput
+          [formControl]="platformCtrl"
+          placeholder="Add Platform"
+          [matChipInputFor]="chipGrid"
+          [matAutocomplete]="auto"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)"/>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let platform of filteredPlatforms | async" [value]="platform.provider_name">
+              {{platform.provider_name}}
+            </mat-option>
+          </mat-autocomplete>
+      
+    </mat-form-field>
+
+   
+
+    <button mat-raised-button color="primary" type="submit">Next</button>
+  </form>
+</div>

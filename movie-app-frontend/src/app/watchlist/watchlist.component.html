@@ -1,0 +1,33 @@
+<!-- watchlist.component.html -->
+
+<!-- Encabezado de la página -->
+
+
+<!-- Contenido principal -->
+<div class="container center">
+    <app-navbar></app-navbar>
+    <h2>Watchlist</h2>
+  <!-- Lista de películas en la watchlist -->
+  <div *ngFor="let movie of watchlist" class="movie-container">
+    <h2>{{ movie.title }}</h2>
+    
+    <!-- Contenedor para la imagen de la película y el botón de eliminar -->
+    <div class="movie-details">
+      <!-- Imagen de la película -->
+      <img [src]="'https://image.tmdb.org/t/p/w500/'+ movie.poster_path" alt="{{ movie.title }}" class="movie-poster">
+    
+      <!-- Botón para eliminar la película de la watchlist -->
+      <button mat-mini-fab class="delete-button" aria-label="Eliminar de la lista" matTooltip="Eliminar de la lista">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+    
+    <!-- Descripción de la película -->
+    <p>{{ movie.overview }}</p>
+  </div>
+
+  <!-- Mensaje si no hay películas en la watchlist -->
+  <div *ngIf="watchlist.length === 0" class="empty-watchlist">
+    Tu watchlist está vacía.
+  </div>
+</div>
