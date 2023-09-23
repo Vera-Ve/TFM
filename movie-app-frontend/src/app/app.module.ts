@@ -24,6 +24,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { RegisterComponent } from './register/register.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
@@ -33,7 +34,8 @@ import { OriginalLanguageComponent } from './original-language/original-language
 import { HomeComponent } from './home/home.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
-import { NavbarComponent } from './navbar/navbar.component'; 
+import { NavbarComponent } from './navbar/navbar.component';
+import { BlacklistComponent } from './blacklist/blacklist.component'; 
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     SearchResultsComponent,
     WatchlistComponent,
     NavbarComponent,
+    BlacklistComponent,
     
   ],
   imports: [
@@ -71,6 +74,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatGridListModule,
     MatTooltipModule,
     MatToolbarModule,
+    MatSnackBarModule,
     
   ],
   providers: [],

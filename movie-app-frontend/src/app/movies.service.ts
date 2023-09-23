@@ -9,7 +9,7 @@ import { throwError } from 'rxjs';
 export class MovieService {
   private apiKey = '78d37cb93c16264fe12628edbd4dfe86'; // Reemplaza con tu propia API key de TMDb
   private apiUrl = 'https://api.themoviedb.org/3';
-  private watchlistApiUrl = '//localhost:8000/api/watchlist/add_to_watchlist/';
+  private watchlistApiUrl = '//localhost:8000/api/watchlist/';
   private blacklistApiUrl = '//localhost:8000/api/blacklist/';
 
 
@@ -84,7 +84,7 @@ export class MovieService {
   });
     // Realiza la solicitud POST al backend, incluyendo los datos de la película y el ID de usuario.
     console.log(movieData );
-  return this.http.post(`${this.watchlistApiUrl}`, movieData , { headers });
+  return this.http.post(`${this.watchlistApiUrl}add_to_watchlist/`, movieData , { headers });
 
 }
 
@@ -127,6 +127,40 @@ getBlacklist(): Observable<number[]> {
  
   // Realiza una solicitud GET para obtener la lista negra del usuario
   return this.http.get<number[]>(`${this.blacklistApiUrl}`, { headers });
+}
+
+removeFromWatchlist(movieId: number): Observable<any> {
+  // Obtén el token JWT almacenado en localStorage
+  const token = localStorage.getItem('jwtToken');
+
+  if (!token) {
+    console.error('Token JWT no encontrado');
+    // Manejo de errores, redirección o cualquier otra acción necesaria
+    return new Observable(); 
+  }
+
+  // Configura los encabezados con el token JWT
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`,
+  });
+  return this.http.post<any>(`${this.watchlistApiUrl}remove/`, { movie_id: movieId }, { headers });
+}
+
+removeFromBlacklist(movieId: number): Observable<any> {
+  // Obtén el token JWT almacenado en localStorage
+  const token = localStorage.getItem('jwtToken');
+
+  if (!token) {
+    console.error('Token JWT no encontrado');
+    // Manejo de errores, redirección o cualquier otra acción necesaria
+    return new Observable(); 
+  }
+
+  // Configura los encabezados con el token JWT
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`,
+  });
+  return this.http.post<any>(`${this.blacklistApiUrl}remove/`, { movie_id: movieId }, { headers });
 }
 }
 

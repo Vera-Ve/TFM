@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MovieService } from '../movies.service';
 
 @Component({
   selector: 'app-watchlist',
@@ -10,7 +11,7 @@ export class WatchlistComponent implements OnInit {
   private watchlistApiUrl = '//localhost:8000/api/watchlist/';
   watchlist: any[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private movieService: MovieService) { }
 
   ngOnInit(): void {
     // Obtén el token JWT almacenado en localStorage
@@ -40,4 +41,18 @@ export class WatchlistComponent implements OnInit {
       }
     );
   }
+
+  removeFromWatchlist(movieId: number) {
+    this.movieService.removeFromWatchlist(movieId).subscribe(
+        (response) => {
+            // Maneja la respuesta exitosa, por ejemplo, eliminando la película de la lista en el frontend.
+            console.log(response.message);
+            this.watchlist = this.watchlist.filter((movie) => movie.id !== movieId);
+        },
+        (error) => {
+          console.error('Error al agregar la película', error);
+            // Maneja los errores de manera apropiada, por ejemplo, mostrando un mensaje de error al usuario.
+        }
+    );
+}
 }

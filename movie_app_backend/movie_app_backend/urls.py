@@ -22,20 +22,21 @@ from . import views
 from .views import get_user
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
-    TokenRefreshView,
     TokenVerifyView,
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', AuthView.as_view(), name='login'),
+    path('api/login/', AuthView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+   
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/watchlist/add_to_watchlist/', views.add_to_watchlist, name='add_to_watchlist'),
     path('api/watchlist/', WatchlistView.as_view(), name='watchlist'),
     path('api/blacklist/add/', views.add_to_blacklist, name='blacklist'),
+    path('api/watchlist/remove/', views.remove_from_watchlist, name='remove_from_watchlist'),
+    path('api/blacklist/remove/', views.remove_from_blacklist, name='remove_from_blacklist'),
     path('api/blacklist/', BlacklistView.as_view(), name='blacklist'),
     path('api/user/', get_user, name='get_user'),
      ]

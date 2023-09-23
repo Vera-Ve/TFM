@@ -8,6 +8,8 @@ import { MovieService } from '../movies.service';
 import { FilterService } from '../filter.service';
 import { AuthService } from '../auth.service';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-search-results',
@@ -27,7 +29,7 @@ export class SearchResultsComponent {
   
   
 
-  constructor(private movieService: MovieService, private filterService: FilterService, private fb: FormBuilder,  private authService: AuthService) {
+  constructor(private movieService: MovieService, private filterService: FilterService, private fb: FormBuilder,  private authService: AuthService, private snackBar: MatSnackBar) {
     this.movieForm = this.fb.group({
       adult: [false, Validators.required],
       backdrop_path: [null, Validators.required],
@@ -147,19 +149,7 @@ getGenreName(genreId: number): string {
 
   addToWatchlist(movieId: number) {
   // Obtén el token JWT almacenado en localStorage
-  const token = localStorage.getItem('jwtToken');
-  console.log(token);
-
-  if (!token) {
-    console.error('Token JWT no encontrado');
-    // Manejo de errores
-    return;
-  }
-  // Configura los encabezados con el token JWT
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
-  });
+  
     
     // Obtén la película actual de filteredMovies
   const currentMovie = this.filteredMovies[this.currentMovieIndex];
@@ -190,11 +180,16 @@ getGenreName(genreId: number): string {
       console.log(response.message); // Muestra un mensaje de éxito
       // Luego, navega al siguiente paso o realiza acciones necesarias
     },
-    (error) => {
-      console.error('Error al agregar la película', error);
-      // Manejo de errores
-    }
+    
+      (error) => {
+        if (error.status === 400 && error.error.message === 'La película ya está en tu watchlist') {
+          this.showErrorMessage('La película ya está en tu watchlist'); // Muestra el mensaje de error
+        } else {
+          console.error('Error al eliminar la película de la lista negra', error);
+        }
+      }
   );
+  
     
     }
  
@@ -203,7 +198,7 @@ getGenreName(genreId: number): string {
       
         // Obtén la película actual de filteredMovies
       const currentMovie = this.filteredMovies[this.currentMovieIndex];
-    
+      // Muestra el mensaje de error
       
       
       // Llama al servicio para agregar la película a la blacklist.
@@ -213,11 +208,21 @@ getGenreName(genreId: number): string {
           // Luego, navega al siguiente paso o realiza acciones necesarias
         },
         (error) => {
-          console.error('Error al agregar la película', error);
-          // Manejo de errores
+          if (error.status === 400 && error.error.message === 'La película ya está en tu blacklist') {
+            this.showErrorMessage('La película ya está en tu blacklist'); // Muestra el mensaje de error
+          } else {
+            console.error('Error al eliminar la película de la lista negra', error);
+          }
         }
       );
         
-        }   
+      } 
+      
+      private showErrorMessage(message: string) {
+        console.log("Call snackbar");
+        this.snackBar.open(message, 'Cerrar', {
+          duration: 3000, // Duración del mensaje en milisegundos (3 segundos)
+        });
+      }
 }
 

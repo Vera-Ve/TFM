@@ -9,17 +9,20 @@ import { DurationComponent } from './duration/duration.component';
 import { OriginalLanguageComponent } from './original-language/original-language.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
+import { BlacklistComponent } from './blacklist/blacklist.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   { path: '', component: AuthComponent }, // Página de inicio de sesión
   { path: 'register', component: RegisterComponent }, // Página de registro
-  { path: 'home', component: HomeComponent}, 
-  { path: 'subscription', component: SubscriptionComponent },// Página de selección de plataformas streaming
-  { path: 'genre', component: GenreComponent }, 
-  { path: 'duration', component: DurationComponent}, 
-  { path: 'language', component: OriginalLanguageComponent}, 
-  { path: 'search-results', component: SearchResultsComponent}, 
-  { path: 'watchlist', component: WatchlistComponent}, 
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard]}, 
+  { path: 'subscription', component: SubscriptionComponent, canActivate: [AuthGuard] },// Página de selección de plataformas streaming
+  { path: 'genre', component: GenreComponent,canActivate: [AuthGuard], }, 
+  { path: 'duration', component: DurationComponent,canActivate: [AuthGuard],}, 
+  { path: 'language', component: OriginalLanguageComponent,canActivate: [AuthGuard],}, 
+  { path: 'search-results', component: SearchResultsComponent,canActivate: [AuthGuard],}, 
+  { path: 'watchlist', component: WatchlistComponent,canActivate: [AuthGuard],}, 
+  { path: 'blacklist', component: BlacklistComponent,canActivate: [AuthGuard],}, 
 ];
 
 @NgModule({
