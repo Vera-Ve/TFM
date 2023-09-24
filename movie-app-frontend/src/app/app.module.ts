@@ -25,6 +25,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { RegisterComponent } from './register/register.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
@@ -35,7 +36,8 @@ import { HomeComponent } from './home/home.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { BlacklistComponent } from './blacklist/blacklist.component'; 
+import { BlacklistComponent } from './blacklist/blacklist.component';
+import { AuthdialogComponent } from './authdialog/authdialog.component'; 
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { BlacklistComponent } from './blacklist/blacklist.component';
     WatchlistComponent,
     NavbarComponent,
     BlacklistComponent,
+    AuthdialogComponent,
     
   ],
   imports: [
@@ -75,6 +78,7 @@ import { BlacklistComponent } from './blacklist/blacklist.component';
     MatTooltipModule,
     MatToolbarModule,
     MatSnackBarModule,
+    MatDialogModule,
     
   ],
   providers: [],

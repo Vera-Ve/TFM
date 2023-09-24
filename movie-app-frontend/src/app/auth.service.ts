@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap , catchError, throwError} from 'rxjs';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+
+import { AuthdialogComponent } from './authdialog/authdialog.component';
 
 
 
@@ -12,7 +15,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private apiUrl = 'http://localhost:8000/'; 
   
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog ) {}
 
   login(email: string, password: string): Observable<any> {
     const body = { email, password };
@@ -80,4 +83,12 @@ getHeaders(): HttpHeaders {
     console.log("Logiut function")
   }
 
+
+  openAuthDialog(): void {
+    console.log("open dialog call");
+    this.dialog.open(AuthdialogComponent, {
+      width: '300px',
+      disableClose: true, // Evita que el usuario cierre el diálogo haciendo clic fuera de él
+    });
+  }
 }

@@ -38,6 +38,7 @@ export class WatchlistComponent implements OnInit {
       (error) => {
         console.error('Error al obtener la watchlist', error);
         // Manejo de errores
+        
       }
     );
   }

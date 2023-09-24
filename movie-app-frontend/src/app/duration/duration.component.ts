@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FilterService } from '../filter.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-duration',
@@ -11,7 +12,7 @@ import { FilterService } from '../filter.service';
 export class DurationComponent {
   durationForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private filterService: FilterService) {
+  constructor(private fb: FormBuilder, private router: Router, private filterService: FilterService, private authService: AuthService) {
     this.durationForm = this.fb.group({
       minDuration: [null, Validators.required],
       maxDuration: [null, Validators.required]
@@ -29,9 +30,15 @@ export class DurationComponent {
       // Almacena los valores en el servicio FilterService
       this.filterService.minDuration = minDuration;
       this.filterService.maxDuration = maxDuration;
-
+      if (this.authService.isAuthenticated()) {
       // Luego, navega al siguiente paso
-      this.router.navigate(['/language']);
+      this.router.navigate(['/language'])
+    } else {
+       
+          // Abre el diálogo de autenticación si recibes un error 401 al navegar a /language
+          this.authService.openAuthDialog();
+        }
+     
     }
   }
 }

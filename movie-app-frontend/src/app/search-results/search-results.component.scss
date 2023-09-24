@@ -49,4 +49,19 @@
   .favorite-button:focus .favorite-text {
     opacity: 1; /* Muestra el texto al hacer foco en el botón */
   }
+
+  .custom-mat-snack-bar {
+    .mat-snack-bar-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   
+    .mat-snack-bar-action {
+      display: none; /* Oculta el botón "Cerrar" */
+    }
+  
+    .mat-snack-bar-message {
+      text-align: center; /* Centra el texto del mensaje */
+    }
+  }

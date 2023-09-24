@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
 
-
+import { AuthdialogComponent } from '../authdialog/authdialog.component';
 import { MovieService } from '../movies.service';
 import { FilterService } from '../filter.service';
 import { AuthService } from '../auth.service';
@@ -25,11 +26,12 @@ export class SearchResultsComponent {
   showFavoriteText: boolean = false;
   genreMap: Map<number, string> = new Map<number, string>();
   movieForm: FormGroup;
+  showAuthWindow = false;
   
   
   
 
-  constructor(private movieService: MovieService, private filterService: FilterService, private fb: FormBuilder,  private authService: AuthService, private snackBar: MatSnackBar) {
+  constructor(private movieService: MovieService, private filterService: FilterService, private fb: FormBuilder,  private authService: AuthService, private snackBar: MatSnackBar, public dialog: MatDialog) {
     this.movieForm = this.fb.group({
       adult: [false, Validators.required],
       backdrop_path: [null, Validators.required],
@@ -177,16 +179,31 @@ getGenreName(genreId: number): string {
   // Llama al servicio para agregar la película a la watchlist.
   this.movieService.addToWatchlist(this.movieForm.value).subscribe(
     (response) => {
+      this.showErrorMessage(response.message);
       console.log(response.message); // Muestra un mensaje de éxito
       // Luego, navega al siguiente paso o realiza acciones necesarias
     },
     
       (error) => {
         if (error.status === 400 && error.error.message === 'La película ya está en tu watchlist') {
-          this.showErrorMessage('La película ya está en tu watchlist'); // Muestra el mensaje de error
+          this.showErrorMessage(error.error.message); // Muestra el mensaje de error
         } else {
-          console.error('Error al eliminar la película de la lista negra', error);
+          if (error.status === 401) {
+            const dialogRef = this.dialog.open(AuthdialogComponent, {
+              width: '400px', // Personaliza el ancho y otras propiedades del diálogo
+            });
+      
+            dialogRef.afterClosed().subscribe((result) => {
+              // Maneja la respuesta después de cerrar el diálogo modal
+              console.log('Diálogo cerrado con resultado:', result);
+              // Realiza acciones adicionales según sea necesario
+            });
+            
+          } else {
+          console.error('Error al anadir la pelicúla a watchlist', error);
+          this.showErrorMessage('Error al anadir la pelicúla a watchlist');
         }
+      }
       }
   );
   
@@ -204,25 +221,46 @@ getGenreName(genreId: number): string {
       // Llama al servicio para agregar la película a la blacklist.
       this.movieService.addToBlacklist(currentMovie.id).subscribe(
         (response) => {
-          console.log(response.message); // Muestra un mensaje de éxito
+          console.log(response.message);
+          this.showErrorMessage(response.message); // Muestra un mensaje de éxito
           // Luego, navega al siguiente paso o realiza acciones necesarias
         },
         (error) => {
           if (error.status === 400 && error.error.message === 'La película ya está en tu blacklist') {
-            this.showErrorMessage('La película ya está en tu blacklist'); // Muestra el mensaje de error
-          } else {
-            console.error('Error al eliminar la película de la lista negra', error);
+            this.showErrorMessage(error.error.message); // Muestra el mensaje de error
+          } else  {
+              if (error.status === 401) {
+                const dialogRef = this.dialog.open(AuthdialogComponent, {
+                  width: '400px', // Personaliza el ancho y otras propiedades del diálogo
+                });
+          
+                dialogRef.afterClosed().subscribe((result) => {
+                  // Maneja la respuesta después de cerrar el diálogo modal
+                  console.log('Diálogo cerrado con resultado:', result);
+                  // Realiza acciones adicionales según sea necesario
+                });
+              
+                
+              } else {
+            
+            console.error('Error al añadir la película de la lista negra', error);
+            this.showErrorMessage('Error al al añadir la película de la lista negra');
           }
         }
-      );
+      }  );
         
       } 
+  
       
       private showErrorMessage(message: string) {
         console.log("Call snackbar");
-        this.snackBar.open(message, 'Cerrar', {
-          duration: 3000, // Duración del mensaje en milisegundos (3 segundos)
+        this.snackBar.open(message, '', {
+          duration: 1000, // Duración del mensaje en milisegundos (3 segundos)
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+          panelClass: 'custom-mat-snack-bar',
         });
       }
+   
 }
 
