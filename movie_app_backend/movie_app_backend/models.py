@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Movie(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     adult = models.BooleanField(default=False)
     backdrop_path = models.CharField(max_length=255, null=True)
     genre_ids = models.JSONField(default=list)
@@ -23,6 +23,13 @@ class Movie(models.Model):
         return self.title
 
 class Blacklist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie_id = models.IntegerField(null=True)
+
+    def __str__(self):
+        return f'Blacklist - {self.user.username} - Movie ID: {self.movie_id}'
+    
+class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     movie_id = models.IntegerField(null=True)
 

@@ -1,5 +1,10 @@
 <div class="auth-container container center">
-    <h2>Registro de Usuario</h2>
+    
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Registro de Usuario</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
     <form (ngSubmit)="register()">
       <mat-form-field class="full-width">
         <input matInput type="email" placeholder="Correo electrónico" [(ngModel)]="email" name="email" required>
@@ -8,9 +13,16 @@
         <input matInput type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required>
       </mat-form-field>
   
-      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div> <!-- Muestra el mensaje de error si existe -->
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+       <!-- Muestra el mensaje de error si existe -->
+       <div *ngIf="successMessage"  class="success-message">{{ successMessage }}</div>
   
       <button type="submit" mat-raised-button color="primary">Registrarse</button>
+     
+    
     </form>
+    <p>Ya tienes una cuenta? <a routerLink="">Log in</a></p>
+  </mat-card-content>
+</mat-card>
   </div>
   

@@ -6,18 +6,13 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenRefreshView
-
-import logging
-logger = logging.getLogger(__name__)
-
-
-
-
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from .models import Movie, Blacklist
-from .serializers import MovieSerializer, BlacklistSerializer
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from .models import Movie, Blacklist,Watchlist
+from .serializers import MovieSerializer, BlacklistSerializer, WatchlistSerializer
 
 #Creación de Usuario
 class RegisterView(APIView):
@@ -29,9 +24,14 @@ class RegisterView(APIView):
         if User.objects.filter(email=email).exists():
             return Response({'message': 'Email already taken'}, status=status.HTTP_400_BAD_REQUEST)
 
+        try:
+            # Validar la contraseña utilizando las reglas de validación de Django
+            validate_password(password)
+        except ValidationError as e:
+            return Response({'message': e.messages}, status=status.HTTP_400_BAD_REQUEST)
+
         # Crear un nuevo usuario
         user = User.objects.create_user(username=email, email=email, password=password)
-
         return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
 
 #Autenticación de Usuario
@@ -64,19 +64,32 @@ def add_to_watchlist(request):
         movie_id = request.data.get('id')
         
         # Verifica si la película ya está en la watchlist del usuario actual
-        if Movie.objects.filter(user=user, id=movie_id).exists():
+        if Watchlist.objects.filter(user=user, movie_id=movie_id).exists():
             return Response({'message': 'La película ya está en tu watchlist'}, status=status.HTTP_400_BAD_REQUEST)
-        # Crea una copia mutable de los datos de la solicitud
-        mutable_data = request.data.copy()
-        print(mutable_data)
-        # Agrega el campo 'user' a los datos de la película
-        mutable_data['user'] = request.user.id
+        
+        # Verifica si la película ya está en el modelo Movie
+        if not Movie.objects.filter(id=movie_id).exists():
+            # La película no está en Movie, por lo que la creamos
+            movie_serializer = MovieSerializer(data=request.data)
 
-        serializer = MovieSerializer(data=mutable_data)
-        if serializer.is_valid():
-            serializer.save()
+            if movie_serializer.is_valid():
+                movie_serializer.save()
+       # Crea una nueva entrada en la watchlist del usuario con el movie_id
+        watchlist_data = {'user': user.id, 'movie_id': movie_id}
+        watchlist_serializer = WatchlistSerializer(data=watchlist_data)
+
+        if watchlist_serializer.is_valid():
+            watchlist_serializer.save()
             return Response({'message': 'Película agregada a la watchlist'}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(watchlist_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response({'message': 'Método no permitido'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+
+
+
+
     
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -97,10 +110,22 @@ class WatchlistView(APIView):
 
     def get(self, request):
         user = request.user
-        movies_in_watchlist = Movie.objects.filter(user=user)
-        print(movies_in_watchlist)
-        serializer = MovieSerializer(movies_in_watchlist, many=True)
+       # Obtén la lista de movie_id en el Watchlist del usuario
+        watchlist_movie_ids = Watchlist.objects.filter(user=user).values_list('movie_id', flat=True)
+
+        # Filtra las películas que están en el Watchlist del usuario
+        filtered_movies = Movie.objects.filter(id__in=watchlist_movie_ids)
+
+        # Serializa las películas para enviarlas como respuesta
+        serializer = MovieSerializer(filtered_movies, many=True)  # Asegúrate de tener un serializador MovieSerializer
+
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+
+
+
 
 #Agrega la película a blacklist
 
@@ -117,8 +142,13 @@ def add_to_blacklist(request):
             # Agrega la película a la lista negra
             blacklist_entry = Blacklist(user=user, movie_id=movie_id)
             blacklist_entry.save()
-            Movie.objects.filter(id=movie_id, user=user).delete()
-
+            Watchlist.objects.filter(movie_id=movie_id, user=user).delete()
+             # Verifica si la película ya está en el modelo Movie
+            if not Movie.objects.filter(id=movie_id).exists():
+            # La película no está en Movie, por lo que la creamos
+                movie_serializer = MovieSerializer(data=request.data)
+                if movie_serializer.is_valid():
+                    movie_serializer.save()
             return Response({'message': 'Película agregada a la lista negra correctamente.'}, status=status.HTTP_201_CREATED)
         else:
             return Response({'error': 'Película ya está en la lista negra.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -130,7 +160,7 @@ def add_to_blacklist(request):
 def remove_from_watchlist(request):
     user = request.user
     movie_id = request.data.get('movie_id')
-    Movie.objects.filter(id=movie_id, user=user).delete()
+    Watchlist.objects.filter(movie_id=movie_id, user=user).delete()
     # Realiza la lógica para eliminar la película con movie_id de la watchlist del usuario actual.
     # Asegúrate de verificar que el usuario esté autenticado antes de eliminar la película.
     # Devuelve una respuesta adecuada, por ejemplo, un mensaje de éxito.
@@ -141,28 +171,46 @@ def remove_from_watchlist(request):
 def remove_from_blacklist(request):
     user = request.user
     movie_id = request.data.get('movie_id')
-    Blacklist.objects.filter(id=movie_id, user=user).delete()
+    Blacklist.objects.filter(movie_id=movie_id, user=user).delete()
     return Response({'message': 'Película eliminada de la blacklist correctamente.'})
    
-        
-       
-    
-            
-            
-            
-           
-    
-    
-    
+
 
 class BlacklistView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         user = request.user
-        movies_in_blacklist = Blacklist.objects.filter(user=user)
-        print(movies_in_blacklist)
-        serializer = BlacklistSerializer(movies_in_blacklist, many=True)
+       # Obtén la lista de movie_id en el Watchlist del usuario
+        blacklist_movie_ids = Blacklist.objects.filter(user=user).values_list('movie_id', flat=True)
+
+        # Filtra las películas que están en el Watchlist del usuario
+        filtered_movies = Movie.objects.filter(id__in=blacklist_movie_ids)
+
+        # Serializa las películas para enviarlas como respuesta
+        serializer = MovieSerializer(filtered_movies, many=True)  # Asegúrate de tener un serializador MovieSerializer
+
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 
+class BlacklistCheckView(APIView):
+     def get(self, request):
+        # Obtiene todos los registros de Blacklist
+        blacklist_entries = Blacklist.objects.all()
+                # Serializa los datos de Blacklist
+        serializer = BlacklistSerializer(blacklist_entries, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class ClearBlacklistView(APIView):
+    def delete(self, request):
+        # Elimina todos los registros de Blacklist
+        Blacklist.objects.all().delete()
+        
+        return Response({'message': 'La tabla Blacklist se ha vaciado correctamente.'}, status=status.HTTP_204_NO_CONTENT)
+    
+class ClearWatchlistView(APIView):
+    def delete(self, request):
+        # Elimina todos los registros de Blacklist
+        Watchlist.objects.all().delete()
+        
+        return Response({'message': 'La tabla Watchlist se ha vaciado correctamente.'}, status=status.HTTP_204_NO_CONTENT)

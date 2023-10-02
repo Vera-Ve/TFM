@@ -1,23 +1,30 @@
 <div class="container center">
     <app-navbar></app-navbar>
     <h2>Blacklist</h2>
-  <!-- Lista de películas en la watchlist -->
+   
+  <!-- Lista de películas en la blacklist -->
   <div *ngFor="let movie of blacklist" class="movie-container">
-    <h2>{{ movie.movie_id}}</h2>
+    <h2>{{ movie.title }}</h2>
     
     <!-- Contenedor para la imagen de la película y el botón de eliminar -->
-    
+    <div class="movie-details">
+      <!-- Imagen de la película -->
+      <img [src]="'https://image.tmdb.org/t/p/w500/'+ movie.poster_path" alt="{{ movie.title }}" class="movie-poster">
     
       <!-- Botón para eliminar la película de la blacklist -->
       <button (click)="removeFromBlacklist(movie.id)" mat-mini-fab class="delete-button" aria-label="Eliminar de la lista" matTooltip="Eliminar de la lista">
         <mat-icon>cancel</mat-icon>
       </button>
     </div>
-    
+    <div> <p>{{ movie.overview }}</p>
+      <p>LkbyfS{{ blacklist.length }}</p>
+    </div>
     <!-- Descripción de la película -->
    
-  <!-- Mensaje si no hay películas en la watchlist -->
-  <div *ngIf="blacklist.length === 0" class="empty-blacklist">
-    Tu blackhlist está vacía.
+
+  <!-- MSensaje si no hay películas en la blacklistlist -->
+  
   </div>
+  <div *ngIf="blacklist.length === 0" class="empty-blacklist">
+    Tu blacklist está vacía.
 </div>

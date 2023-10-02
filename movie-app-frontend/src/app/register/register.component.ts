@@ -9,7 +9,8 @@ import { AuthService } from '../auth.service';
 export class RegisterComponent {
   email: string = '';
   password: string = '';
-  errorMessage: string = ''; // Agrega una propiedad para almacenar el mensaje de error
+  errorMessage: string = ''; 
+  successMessage: string = '';// Agrega una propiedad para almacenar el mensaje de error
 
   constructor(private authService: AuthService) {}
 
@@ -17,6 +18,8 @@ export class RegisterComponent {
     // Llama al servicio de registro para crear un nuevo usuario
     this.authService.register(this.email, this.password).subscribe(
       response => {
+        this.successMessage = response.message; 
+        this.errorMessage = '';
         // Manejar respuesta exitosa (redirigir a la página de inicio de sesión)
       },
       error => {

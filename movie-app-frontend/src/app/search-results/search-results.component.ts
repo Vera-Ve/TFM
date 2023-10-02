@@ -81,7 +81,7 @@ export class SearchResultsComponent {
       const data = await this.movieService.getBlacklist().toPromise();
       if (data && data.length > 0) {
         // Almacena los IDs de las películas en la lista negra
-        this.blacklist = data.map((movie: any) => movie.movie_id);
+        this.blacklist = data.map((movie: any) => movie.id);
         console.log('Blacklist received', this.blacklist);
       }
     } catch (error) {
@@ -222,7 +222,10 @@ getGenreName(genreId: number): string {
       this.movieService.addToBlacklist(currentMovie.id).subscribe(
         (response) => {
           console.log(response.message);
-          this.showErrorMessage(response.message); // Muestra un mensaje de éxito
+          this.showErrorMessage(response.message);
+          setTimeout(() => {
+            this.showNextMovie();
+          }, 500); // Muestra un mensaje de éxito
           // Luego, navega al siguiente paso o realiza acciones necesarias
         },
         (error) => {

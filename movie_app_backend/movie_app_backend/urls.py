@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import AuthView, RegisterView, WatchlistView, BlacklistView
+from .views import AuthView, RegisterView, WatchlistView, BlacklistView, BlacklistCheckView
 
 from . import views
 from .views import get_user
@@ -38,5 +38,8 @@ urlpatterns = [
     path('api/watchlist/remove/', views.remove_from_watchlist, name='remove_from_watchlist'),
     path('api/blacklist/remove/', views.remove_from_blacklist, name='remove_from_blacklist'),
     path('api/blacklist/', BlacklistView.as_view(), name='blacklist'),
+    path('api/blacklistcheck/', BlacklistCheckView.as_view(), name='blacklistcheck'),
+    path('api/clear-blacklist/', views.ClearBlacklistView.as_view(), name='clear-blacklist'),
+    path('api/clear-watchlist/', views.ClearWatchlistView.as_view(), name='clear-watchlist'),
     path('api/user/', get_user, name='get_user'),
      ]

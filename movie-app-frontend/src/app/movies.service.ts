@@ -110,7 +110,7 @@ addToBlacklist(movieId: number): Observable<any> {
   return this.http.post(`${this.blacklistApiUrl}add/`, requestBody, { headers });
 }
 
-getBlacklist(): Observable<number[]> {
+getBlacklist(): Observable<any> {
   // Obtén el token JWT almacenado en localStorage
   const token = localStorage.getItem('jwtToken');
 
@@ -126,7 +126,7 @@ getBlacklist(): Observable<number[]> {
   });
  
   // Realiza una solicitud GET para obtener la lista negra del usuario
-  return this.http.get<number[]>(`${this.blacklistApiUrl}`, { headers });
+  return this.http.get(`${this.blacklistApiUrl}`, { headers });
 }
 
 removeFromWatchlist(movieId: number): Observable<any> {
