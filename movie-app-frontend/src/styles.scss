@@ -1,8 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@include mat.core();
+$my-primary: mat.define-palette(mat.$grey-palette, 900);
+
+$my-accent: mat.define-palette(mat.$grey-palette, 100, 200, 300);
+
+$my-theme: mat.define-light-theme((
+ color: (
+   primary: $my-primary,
+   accent: $my-accent,
+   
+ ),
+ typography: mat.define-typography-config(),
+ density: 0,
+ 
+));
+@include mat.all-component-themes($my-theme);
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+* {
+  margin: 0;
+  padding: 0;
+}
 
 ul {
     list-style-type: none;
@@ -13,8 +35,9 @@ ul {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    
+    min-height: 100vh;
     align-items: center;
+    box-sizing: border-box;
     
   }
   .center {

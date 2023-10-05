@@ -88,7 +88,7 @@ export class MovieService {
 
 }
 
-addToBlacklist(movieId: number): Observable<any> {
+addToBlacklist(movieData: any): Observable<any> {
   // Obtén el token JWT almacenado en localStorage
   const token = localStorage.getItem('jwtToken');
 
@@ -104,10 +104,10 @@ addToBlacklist(movieId: number): Observable<any> {
   });
 
   // Crea el cuerpo de la solicitud con el ID de la película
-  const requestBody = { movie_id: movieId };
+  console.log(movieData);
 
   // Realiza una solicitud POST para agregar la película a la lista negra
-  return this.http.post(`${this.blacklistApiUrl}add/`, requestBody, { headers });
+  return this.http.post(`${this.blacklistApiUrl}add/`, movieData, { headers });
 }
 
 getBlacklist(): Observable<any> {

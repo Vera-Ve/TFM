@@ -41,5 +41,6 @@ urlpatterns = [
     path('api/blacklistcheck/', BlacklistCheckView.as_view(), name='blacklistcheck'),
     path('api/clear-blacklist/', views.ClearBlacklistView.as_view(), name='clear-blacklist'),
     path('api/clear-watchlist/', views.ClearWatchlistView.as_view(), name='clear-watchlist'),
+    path('api/clear-db/', views.ClearDatabaseView.as_view(), name='clear-db'),
     path('api/user/', get_user, name='get_user'),
      ]

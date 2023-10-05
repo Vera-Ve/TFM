@@ -1,11 +1,32 @@
 <div class="auth-container container center">
+  <header>
+    <!-- Logo o imagen del encabezado -->
+    <img src="ruta_del_logo" alt="Logo de la aplicación">
+    <h2 class="header-text">MUMÜ</h2>
+    <div class="main_text">
+
+      <p class="main-paragraph">¿No sabes que película elegir para esta noche? ¿Estás perdido entre tantas plataformas streaming? ¿Llevas una hora buscando y no te interesa nada de lo que aparece?
+        
+        </p>
+        <h2>¡Mumú se ocupa de todo!</h2>
+        <p>Con sus filtros personalizados tú solo tienes que preocuparte de ponerte comodo y disfrutar.</p>
+        
+    </div>
+  </header>
+  <div class="background_image">
+    <!-- Texto descriptivo de la aplicación -->
+   
+    
+
+    <!-- Formulario de autorización a la derecha del texto -->
+    <div class="authorization-form">
     
     <mat-card>
       <mat-card-header>
         <mat-card-title>Registro de Usuario</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-    <form (ngSubmit)="register()">
+    <form class="mat_form" (ngSubmit)="register()">
       <mat-form-field class="full-width">
         <input matInput type="email" placeholder="Correo electrónico" [(ngModel)]="email" name="email" required>
       </mat-form-field>
@@ -13,15 +34,16 @@
         <input matInput type="password" placeholder="Contraseña" [(ngModel)]="password" name="password" required>
       </mat-form-field>
   
-      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <div  class="error-message" [ngClass]="{ 'show-message': errorMessage }">{{ errorMessage }}</div>
        <!-- Muestra el mensaje de error si existe -->
-       <div *ngIf="successMessage"  class="success-message">{{ successMessage }}</div>
+       <div   class="success-message" [ngClass]="{ 'show-message': successMessage }">{{ successMessage }}</div>
   
       <button type="submit" mat-raised-button color="primary">Registrarse</button>
      
     
     </form>
     <p>Ya tienes una cuenta? <a routerLink="">Log in</a></p>
+    <p>Olvidaste tu contraseña? <a routerLink="/register">Pulsa aquí</a></p>
   </mat-card-content>
 </mat-card>
   </div>

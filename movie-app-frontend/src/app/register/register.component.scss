@@ -1,6 +1,94 @@
+
 mat-card {
-    max-width: 400px;
-    margin: auto;
-    margin-top: 50px;
-    padding: 20px;
-  }
+  width: 330px;
+  margin: auto;
+  margin-top: 50px;
+  padding: 20px;
+}
+header {
+  background-color: black;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.header-text {
+  color: white;
+  font-size: 36px;
+  margin: 15px;
+  
+}
+
+
+
+.background_image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+width: 100%;
+height: 100vh;
+background-image: url('../../assets/images/main_backgroung.jpg'); /* Ruta de la imagen de fondo */
+background-size: cover; /* Ajusta la imagen al tamaño completo del contenedor */
+background-repeat: no-repeat; /* Evita la repetición de la imagen de fondo */
+background-attachment: fixed; /* Fija la imagen de fondo para que no se desplace con el contenido */
+/* Puedes ajustar otros estilos como color de fondo o tipografía según tus preferencias */
+}
+.main_text {
+  color: white;
+  font-size: 20px;
+  padding: 10px;
+  
+  background-color: black;
+  box-sizing: border-box; /* Esta línea evita que el bloque se salga del contenedor */
+  
+  
+}
+
+.authorization-form {
+margin: 10px;
+}
+
+
+mat-card {
+background-color: rgba(255, 255, 255, 0.8);
+}
+
+mat-card-header {
+  justify-content: center;
+}
+
+.mat_form {
+display: flex;
+flex-direction: column;
+}
+
+.main-paragraph {
+margin: 0; /* Elimina el margen predeterminado del párrafo */
+}
+
+.error-message {
+/* Estilo predeterminado del mensaje de error (sin mostrar) */
+max-width: 330px;
+color: red;
+visibility: hidden;
+margin-top: 10px;
+margin-bottom: 10px;
+min-height: 10px;
+
+}
+
+.show-message {
+/* Estilo cuando se muestra el mensaje de error */
+visibility: visible;
+}
+
+
+
+
+footer {
+width: 100%;
+height: 150px;
+background-color: black;
+}

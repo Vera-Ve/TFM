@@ -20,6 +20,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SearchResultsComponent {
   filteredMovies: any[] = [];
   blacklist: number[] = [];
+  blacklistTemp:number[] = [];
   currentPage = 1;
   currentMovieIndex = 0;
   itemsPerPage = 20;
@@ -77,6 +78,7 @@ export class SearchResultsComponent {
   
   
   async loadBlacklist() {
+    console.log("call blacklist")
     try {
       const data = await this.movieService.getBlacklist().toPromise();
       if (data && data.length > 0) {
@@ -127,13 +129,29 @@ export class SearchResultsComponent {
   showNextMovie() {
     if (this.currentMovieIndex < this.filteredMovies.length - 1) {
       this.currentMovieIndex++;
+      const currentMovie = this.filteredMovies[this.currentMovieIndex];
+      
+      // Verifica si la película actual está en la lista negra provisional
+      if (this.blacklistTemp.includes(currentMovie.id)) {
+        // Si está en la lista negra provisional, pasa a la siguiente película
+        this.showNextMovie();
+      }
     } else {
       // Llegaste al final de la lista actual, carga más películas
       this.loadMovies();
+      this.currentMovieIndex++;
       
-    
+      
+    }
   }
-}
+
+
+
+
+
+
+
+
 getGenreName(genreId: number): string {
   // Encuentra el nombre del género correspondiente en la lista de géneros
   const genreName = this.genreMap.get(genreId);
@@ -145,10 +163,23 @@ getGenreName(genreId: number): string {
   // Función para mostrar la película anterior
   showPreviousMovie() {
     if (this.currentMovieIndex > 0) {
-      this.currentMovieIndex--;
+      let previousIndex = this.currentMovieIndex - 1;
+  
+      while (previousIndex >= 0) {
+        const previousMovie = this.filteredMovies[previousIndex];
+        if (!this.isMovieInBlacklistArray(previousMovie.id)) {
+          this.currentMovieIndex = previousIndex;
+          break;
+        }
+        previousIndex--;
+      }
     }
   }
-
+  
+  isMovieInBlacklistArray(movieId: number): boolean {
+    return this.blacklistTemp.includes(movieId);
+  }
+ 
   addToWatchlist(movieId: number) {
   // Obtén el token JWT almacenado en localStorage
   
@@ -215,14 +246,35 @@ getGenreName(genreId: number): string {
       
         // Obtén la película actual de filteredMovies
       const currentMovie = this.filteredMovies[this.currentMovieIndex];
-      // Muestra el mensaje de error
+      
+      // Llena el formulario con los datos de la película actual
+  this.movieForm.patchValue({
+    adult: currentMovie.adult,
+    backdrop_path: currentMovie.backdrop_path,
+    genre_ids: currentMovie.genre_ids,
+    id: currentMovie.id,
+    original_language: currentMovie.original_language,
+    original_title: currentMovie.original_title,
+    overview: currentMovie.overview,
+    popularity: currentMovie.popularity,
+    poster_path: currentMovie.poster_path,
+    release_date: currentMovie.release_date,
+    title: currentMovie.title,
+    video: currentMovie.video,
+    vote_average: currentMovie.vote_average,
+    vote_count: currentMovie.vote_count,
+  });
+  
+  console.log(this.movieForm.value);
       
       
       // Llama al servicio para agregar la película a la blacklist.
-      this.movieService.addToBlacklist(currentMovie.id).subscribe(
+      this.movieService.addToBlacklist(this.movieForm.value).subscribe(
         (response) => {
           console.log(response.message);
           this.showErrorMessage(response.message);
+          this.blacklistTemp.push(currentMovie.id);
+          
           setTimeout(() => {
             this.showNextMovie();
           }, 500); // Muestra un mensaje de éxito

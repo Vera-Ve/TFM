@@ -133,8 +133,9 @@ class WatchlistView(APIView):
 @permission_classes([permissions.IsAuthenticated])
 def add_to_blacklist(request):
     user = request.user
-    movie_id = request.data.get('movie_id')
+    movie_id = request.data.get('id')
     print(f"User ID: {user.id}, Movie ID: {movie_id}")
+    
 
     try:
         # Verifica si la película ya está en la lista negra del usuario
@@ -144,11 +145,15 @@ def add_to_blacklist(request):
             blacklist_entry.save()
             Watchlist.objects.filter(movie_id=movie_id, user=user).delete()
              # Verifica si la película ya está en el modelo Movie
-            if not Movie.objects.filter(id=movie_id).exists():
+        if not Movie.objects.filter(id=movie_id).exists():
+            
             # La película no está en Movie, por lo que la creamos
-                movie_serializer = MovieSerializer(data=request.data)
-                if movie_serializer.is_valid():
-                    movie_serializer.save()
+            movie_serializer = MovieSerializer(data=request.data)
+            print(request.data)
+            if movie_serializer.is_valid():
+                movie_serializer.save()
+            
+                    
             return Response({'message': 'Película agregada a la lista negra correctamente.'}, status=status.HTTP_201_CREATED)
         else:
             return Response({'error': 'Película ya está en la lista negra.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -214,3 +219,12 @@ class ClearWatchlistView(APIView):
         Watchlist.objects.all().delete()
         
         return Response({'message': 'La tabla Watchlist se ha vaciado correctamente.'}, status=status.HTTP_204_NO_CONTENT)
+
+
+class ClearDatabaseView(APIView):
+    def delete(self, request):
+        # Elimina todos los registros de Blacklist
+        Movie.objects.all().delete()
+        
+        return Response({'message': 'La tabla Movie se ha vaciado correctamente.'}, status=status.HTTP_204_NO_CONTENT)
+    
