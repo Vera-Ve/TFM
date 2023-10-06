@@ -1,33 +1,37 @@
-<div class="subscription-container container center">
-  <app-navbar></app-navbar>
-    <h2>Choose Your Genres</h2>
-    <form (ngSubmit)="saveAndNavigate()">
-<span>
+<app-navbar></app-navbar>
+<div class="container center">
+  <div class="content">
+      <h2>Elija los generos</h2>
+    <form class="form_genre" (ngSubmit)="saveAndNavigate()">
+<span class="genre_list">
     <mat-checkbox [checked]="selectAll"  
                   [indeterminate]="someComplete()"
                   (change)="setSelectAll($event.checked)">
     Select All
   </mat-checkbox></span>
-<span>
-        <ul>
-            <li *ngFor="let genre of genres; let i = index">
+  <div class="genre-columns">
+        <ul class="genre_ul center">
+            <li class="genre_list" *ngFor="let genre of genres; let i = index">
              
   
-        <mat-checkbox [name]="'genre_' + i" [(ngModel)]="genres[i].selected"  (ngModelChange)="updateSelectAll()">
+        <mat-checkbox class="genre_checkbox" [name]="'genre_' + i" [(ngModel)]="genres[i].selected"  (ngModelChange)="updateSelectAll()">
           {{ genre.name }}
         </mat-checkbox>
         
     </li>
 </ul>
-</span>
+</div>
       
   
   
       
   
-  
-      <button mat-raised-button color="primary" type="submit">Siguiente</button>
-     
+<div class="button_container">
+      <button  class="button_navigate" mat-raised-button color="primary"  type="cancel" routerLink="/subscription">Volver</button>
+      <button  class="button_navigate" mat-raised-button color="primary" type="submit">Siguiente</button>
+      
+    </div>
     </form>
+  </div>
   </div>
   

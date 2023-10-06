@@ -1,8 +1,7 @@
 .mat-form-field-container {
-    display: inline-block;
-    width: calc(50% - 16px); /* 50% width with some margin */
-    margin-right: 16px; /* Add some margin between columns */
+    
     vertical-align: top; /* Align fields to the top */
+    margin: 40px;
   }
   
   @media (max-width: 768px) {
@@ -13,4 +12,19 @@
       margin-bottom: 16px; /* Add margin between rows */
     }
   }
+
+  .button_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form_duration {
+  width: 100%;
+}
+.duration_container {
+  display: flex;
+  justify-content: center;
+}
+
+
   

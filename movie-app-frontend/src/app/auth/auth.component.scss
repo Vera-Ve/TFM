@@ -5,26 +5,13 @@ mat-card {
     margin-top: 50px;
     padding: 20px;
   }
-  header {
-    background-color: black;
-    width: 100%;
-    text-align: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .header-text {
-    color: white;
-    font-size: 36px;
-    margin: 15px;
-    
-  }
+  
 
   
 
   .background_image {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   width: 100%;
@@ -35,16 +22,7 @@ mat-card {
   background-attachment: fixed; /* Fija la imagen de fondo para que no se desplace con el contenido */
   /* Puedes ajustar otros estilos como color de fondo o tipografía según tus preferencias */
   }
-  .main_text {
-    color: white;
-    font-size: 20px;
-    padding: 10px;
-    
-    background-color: black;
-    box-sizing: border-box; /* Esta línea evita que el bloque se salga del contenedor */
-    
-    
-  }
+
 
 .authorization-form {
   margin: 10px;
@@ -67,16 +45,7 @@ mat-card-header {
   margin: 0; /* Elimina el margen predeterminado del párrafo */
 }
 
-.error-message {
-  /* Estilo predeterminado del mensaje de error (sin mostrar) */
-  
-  color: red;
-  opacity: 0;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  height: 10px;
- 
-}
+
 
 .show-error {
   /* Estilo cuando se muestra el mensaje de error */
@@ -85,9 +54,3 @@ mat-card-header {
 
 
 
-
-footer {
-  width: 100%;
-  height: 150px;
-  background-color: black;
-}

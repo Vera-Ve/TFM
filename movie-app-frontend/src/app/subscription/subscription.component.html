@@ -1,8 +1,9 @@
-<div class="subscription-container container center">
-  <app-navbar></app-navbar>
-  <h2>Choose Your Streaming Platforms</h2>
-  <form (ngSubmit)="saveAndNavigate()">
-  <mat-form-field>
+<app-navbar></app-navbar>
+<div class=" container center">
+  <div class="content">
+  <h2>Elija tus plataformas streaming</h2>
+  <form class="form_subsctiption" (ngSubmit)="saveAndNavigate()">
+  <mat-form-field class="mat-form-field_subsctiption">
       
     <mat-label>Select Platforms</mat-label>
       <mat-chip-grid #chipGrid aria-label="Platform selection">
@@ -37,7 +38,9 @@
     </mat-form-field>
 
    
-
-    <button mat-raised-button color="primary" type="submit">Next</button>
+<div class="button_container">
+    <button mat-raised-button color="primary" type="submit" class="button_navigate">Siguiente</button>
+  </div>
   </form>
+</div>
 </div>

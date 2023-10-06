@@ -1,0 +1,39 @@
+.button_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form_genre {
+    width: 100%;
+}
+
+.genre_ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .genre_list {
+    flex-basis: calc(33% - 10px); /* Divide la lista en dos columnas con un espacio entre ellas */
+    margin-bottom: 10px; /* Espacio entre las filas de géneros */
+    padding-left: 50px;
+    box-sizing: border-box;
+  }
+
+  .genre-columns {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente las dos columnas */
+    align-items: center; /* Centra verticalmente las dos columnas */
+    flex-wrap: wrap; /* Permite que los elementos de la lista se envuelvan cuando no haya suficiente espacio horizontal */
+    gap: 10px; /* Espacio entre los elementos de la lista */
+    width: 100%;
+  }
+  
+  
+  
+  
+  
+  
+  
+  

@@ -68,16 +68,7 @@ flex-direction: column;
 margin: 0; /* Elimina el margen predeterminado del párrafo */
 }
 
-.error-message {
-/* Estilo predeterminado del mensaje de error (sin mostrar) */
-max-width: 330px;
-color: red;
-visibility: hidden;
-margin-top: 10px;
-margin-bottom: 10px;
-min-height: 10px;
 
-}
 
 .show-message {
 /* Estilo cuando se muestra el mensaje de error */
