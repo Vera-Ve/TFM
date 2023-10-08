@@ -25,10 +25,15 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
+#from djoser.views import PasswordResetView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/login/', AuthView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
+   # path('api/users/reset_password/', PasswordResetView.as_view(), name='password-reset'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
    
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
@@ -42,5 +47,6 @@ urlpatterns = [
     path('api/clear-blacklist/', views.ClearBlacklistView.as_view(), name='clear-blacklist'),
     path('api/clear-watchlist/', views.ClearWatchlistView.as_view(), name='clear-watchlist'),
     path('api/clear-db/', views.ClearDatabaseView.as_view(), name='clear-db'),
+    
     path('api/user/', get_user, name='get_user'),
      ]

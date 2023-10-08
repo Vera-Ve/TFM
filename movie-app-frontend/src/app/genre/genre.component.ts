@@ -16,6 +16,7 @@ interface Genre {
 export class GenreComponent implements OnInit {
   genres: Genre[] = [];
   selectAll: boolean = false;
+  isNextButtonDisabled = true;
 
   constructor(private router: Router, private filterService: FilterService, private http: HttpClient) {}
 
@@ -40,11 +41,20 @@ export class GenreComponent implements OnInit {
   setSelectAll(selected: boolean) {
     this.selectAll = selected;
     this.genres.forEach(genre => (genre.selected = selected));
+    this.updateNextButtonState();
     
   }
   someComplete(): boolean {
-    
+    this.updateNextButtonState();
     return this.genres.filter(genre => genre.selected).length > 0 && !this.selectAll;
+    
+  }
+
+  private updateNextButtonState(): void {
+    console.log("Update button call");
+    this.isNextButtonDisabled = this.genres.every(genre => !genre.selected);
+    console.log(this.isNextButtonDisabled);
+
   }
 
   updateSelectAll() {

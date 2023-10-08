@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,  AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FilterService } from '../filter.service';
 import { AuthService } from '../auth.service';
@@ -11,18 +11,44 @@ import { AuthService } from '../auth.service';
 })
 export class DurationComponent {
   durationForm: FormGroup;
+  isNextButtonDisabled = true;
 
   constructor(private fb: FormBuilder, private router: Router, private filterService: FilterService, private authService: AuthService) {
     this.durationForm = this.fb.group({
       minDuration: [null, Validators.required],
       maxDuration: [null, Validators.required]
+    }, { validators: this.durationRangeValidator });
+
+    this.durationForm.valueChanges.subscribe(() => {
+      this.updateNextButtonState();
     });
   }
 
+  // Método para actualizar el estado del botón "Siguiente"
+  private updateNextButtonState() {
+    this.isNextButtonDisabled = this.durationForm.invalid;
+  }
+
+
+  // Validador personalizado para garantizar que la duración máxima sea mayor que la duración mínima
+  durationRangeValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const minDuration = control.get('minDuration')?.value;
+    const maxDuration = control.get('maxDuration')?.value;
+
+    if (minDuration !== null && maxDuration !== null && minDuration >= maxDuration) {
+      return { invalidRange: true };
+    }
+
+    return null;
+  }
+
+  
   saveAndNavigate() {
     if (this.durationForm.valid) {
       const minDuration = this.durationForm.value.minDuration;
       const maxDuration = this.durationForm.value.maxDuration;
+     
+      
 
       // Haz algo con los valores aquí (por ejemplo, enviarlos al servidor)
       console.log('Min Duration:', minDuration);

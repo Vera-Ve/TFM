@@ -1,7 +1,10 @@
+<app-navbar></app-navbar>
+<div class="container center">
 <div *ngIf="filteredMovies.length > 0" class="container center">
-  <app-navbar></app-navbar>
+  
   
     <h2>{{ filteredMovies[currentMovieIndex].title }}</h2>
+   
     <div class="button-container">
      
 
@@ -21,7 +24,7 @@
     <button mat-icon-button class="round-button" (click)="showPreviousMovie()">
         <mat-icon aria-label="Anterior">keyboard_arrow_left</mat-icon>
       </button>
-    <img [src]="'https://image.tmdb.org/t/p/w500/'+filteredMovies[currentMovieIndex].poster_path" alt="Movie Poster" />
+    <img [src]="'https://image.tmdb.org/t/p/w500/'+filteredMovies[currentMovieIndex].poster_path" class="movie-poster" alt="Movie Poster" />
       
       <button mat-icon-button class="round-button" (click)="showNextMovie()">
         <mat-icon aria-label="Siguiente">keyboard_arrow_right</mat-icon>
@@ -36,6 +39,7 @@
     </span>
   </p>
 
+</div>
 </div>
 
 

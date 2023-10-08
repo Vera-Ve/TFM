@@ -37,7 +37,8 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BlacklistComponent } from './blacklist/blacklist.component';
-import { AuthdialogComponent } from './authdialog/authdialog.component'; 
+import { AuthdialogComponent } from './authdialog/authdialog.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component'; 
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { AuthdialogComponent } from './authdialog/authdialog.component';
     NavbarComponent,
     BlacklistComponent,
     AuthdialogComponent,
+    ResetPasswordComponent,
     
   ],
   imports: [

@@ -19,7 +19,7 @@
   </div>
     <div class="button_container">
     <button  class="button_navigate" mat-raised-button color="primary"  type="cancel" routerLink="/genre">Volver</button>
-      <button class="button_navigate" mat-raised-button color="primary" type="submit">Siguiente</button>
+      <button class="button_navigate" mat-raised-button color="primary" [disabled]="isNextButtonDisabled" type="submit">Siguiente</button>
     </div>
     </form>
   </div>

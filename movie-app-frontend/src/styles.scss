@@ -145,10 +145,13 @@ font-size: medium;
     justify-content: center;
   }
 
-  .button_container {
-    display: flex;
-    justify-content: right;
-}
+
   .button_navigate {
     width: 221px;
   }
+
+.movie-poster {
+  width: 500px; /* Cambia esto al tamaño deseado en píxeles */
+  height: 750px; /* Cambia esto al tamaño deseado en píxeles */
+  object-fit: cover; /* Esto asegura que la imagen se ajuste al tamaño sin distorsión */
+}

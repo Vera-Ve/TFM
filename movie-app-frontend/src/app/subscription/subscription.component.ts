@@ -28,6 +28,7 @@ export class SubscriptionComponent implements OnInit {
   platformCtrl = new FormControl('');
   platforms: SubscriptionProvider[] = [];
   selectedPlatforms: SubscriptionProvider[] = [];
+  isNextButtonDisabled = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   @ViewChild('platformInput') platformInput!: ElementRef<HTMLInputElement>;
   announcer: LiveAnnouncer;
@@ -87,10 +88,14 @@ export class SubscriptionComponent implements OnInit {
 
     if (value)  {
       this.selectedPlatforms.push({ provider_name: value, provider_id: 0, selected: true });
+      
+    
     }
     console.log(this.selectedPlatforms);
     event.chipInput!.clear();
     this.platformCtrl.setValue(null);
+   
+    
   }
 
   removeChip(platform: SubscriptionProvider): void {
@@ -100,6 +105,13 @@ export class SubscriptionComponent implements OnInit {
       this.selectedPlatforms.splice(index, 1);
       this.announcer.announce(`Removed ${platform.provider_name}`);
     }
+    this.updateNextButtonState();
+  }
+
+  private updateNextButtonState(): void {
+    console.log("Update next button call");
+    this.isNextButtonDisabled = this.selectedPlatforms.length === 0;
+    console.log(this.isNextButtonDisabled);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -110,6 +122,8 @@ export class SubscriptionComponent implements OnInit {
           provider_id: selectedPlatform.provider_id, // Usamos el ID real
           selected: true,
       });
+      this.updateNextButtonState();
+      
   } else {
       // Manejar el caso en que no se encontró la plataforma
       console.error(`No se encontró la plataforma con el nombre: ${event.option.viewValue}`);

@@ -10,6 +10,7 @@ import { OriginalLanguageComponent } from './original-language/original-language
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { BlacklistComponent } from './blacklist/blacklist.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'search-results', component: SearchResultsComponent,canActivate: [AuthGuard],}, 
   { path: 'watchlist', component: WatchlistComponent,canActivate: [AuthGuard],}, 
   { path: 'blacklist', component: BlacklistComponent,canActivate: [AuthGuard],}, 
+  { path: 'reset-password', component: ResetPasswordComponent },
 ];
 
 @NgModule({

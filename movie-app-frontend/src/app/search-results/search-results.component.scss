@@ -65,3 +65,16 @@
       text-align: center; /* Centra el texto del mensaje */
     }
   }
+  
+  /* Establece un tamaño fijo para las imágenes de las películas */
+  .movie-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .movie-poster {
+    max-width: 100%; /* Establece el ancho máximo para ajustarse a la pantalla */
+    height: auto; /* Mantiene la proporción de aspecto */
+  }

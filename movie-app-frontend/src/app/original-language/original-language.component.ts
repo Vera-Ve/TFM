@@ -31,6 +31,7 @@ export class OriginalLanguageComponent implements OnInit {
   languageCtrl = new FormControl('');
   languages: Language[] = [];
   selectedLanguages: any[] = [];
+  isNextButtonDisabled = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   @ViewChild('languageInput') languageInput!: ElementRef<HTMLInputElement>;
   announcer: LiveAnnouncer;
@@ -99,6 +100,7 @@ export class OriginalLanguageComponent implements OnInit {
     if (index >= 0) {
       this.selectedLanguages.splice(index, 1);
       this.announcer.announce(`Removed ${language.english_name}`);
+      this.updateNextButtonState();
     }
   }
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -110,6 +112,7 @@ export class OriginalLanguageComponent implements OnInit {
           name: selectedLanguage.name,
           selected: true,
       });
+      this.updateNextButtonState();
   } else {
       // Manejar el caso en que no se encontró la plataforma
       console.error(`No se encontró la plataforma con el nombre: ${event.option.viewValue}`);
@@ -117,6 +120,12 @@ export class OriginalLanguageComponent implements OnInit {
     this.languageInput.nativeElement.value = '';
     this.languageCtrl.setValue(null);
     console.log(this.selectedLanguages);
+  }
+
+  private updateNextButtonState(): void {
+    console.log("Update next button call");
+    this.isNextButtonDisabled = this.selectedLanguages.length === 0;
+    console.log(this.isNextButtonDisabled);
   }
 
   private _filter(value: string): any[] {
