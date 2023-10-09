@@ -195,25 +195,40 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
+
+DOMAIN = 'localhost:4200'
+SITE_NAME = 'MUMÚ'
+
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': '/reset-password/{uid}/{token}',
+    
+   
+    'PASSWORD_RESET_CONFIRM_URL': 'reset-password/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': 'username-reset-confirm/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {},
+
     # Otras configuraciones de Djoser...
 }
+
+# AWS settings
+
+AWS_ACCESS_KEY_ID = 'AKIAVBRNWFLQTD44KTOS'  
+AWS_SECRET_ACCESS_KEY = 'BJXTnfRjMYBr57j9dP7ijXQSK43bFKEC/gdVAmo1Wqsn'  
 
 # Email settings
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = 'vera.savina.ve@gmail.com'
-EMAIL_HOST_PASSWORD = 'aywg xyxr hwps mgf'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 
-EMAIL_SERVER = EMAIL_HOST_USER
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_ADMIN = ['vera.savina.ve@gmail.com']
+
+
+
+DEFAULT_FROM_EMAIL = 'noreply@mumu.awsapps.com'
+
+

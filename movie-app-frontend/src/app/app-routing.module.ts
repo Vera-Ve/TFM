@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'search-results', component: SearchResultsComponent,canActivate: [AuthGuard],}, 
   { path: 'watchlist', component: WatchlistComponent,canActivate: [AuthGuard],}, 
   { path: 'blacklist', component: BlacklistComponent,canActivate: [AuthGuard],}, 
-  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'reset-password/:uid/:token', component: ResetPasswordComponent },
 ];
 
 @NgModule({
