@@ -59,6 +59,7 @@ export class OriginalLanguageComponent implements OnInit {
         console.error('Error al obtener los idiomas:', error);
       }
     );
+    this.filterService.languages = [];
   }
 
 

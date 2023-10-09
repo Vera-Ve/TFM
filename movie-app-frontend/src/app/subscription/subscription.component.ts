@@ -60,6 +60,7 @@ export class SubscriptionComponent implements OnInit {
           console.error('Error al obtener los nombres de suscripciones:', error);
         }
       );
+      this.filterService.subscriptions = [];
   }
 
   selectAll: boolean = false;

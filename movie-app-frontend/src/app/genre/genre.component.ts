@@ -34,6 +34,7 @@ export class GenreComponent implements OnInit {
         this.genres = data.genres.map((genre: any) => ({ id: genre.id, name: genre.name, selected: false }));
       }
     });
+    this.filterService.genres = [];
   }
 
 
