@@ -11,6 +11,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { BlacklistComponent } from './blacklist/blacklist.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordEmailComponent } from './reset-password-email/reset-password-email.component';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'watchlist', component: WatchlistComponent,canActivate: [AuthGuard],}, 
   { path: 'blacklist', component: BlacklistComponent,canActivate: [AuthGuard],}, 
   { path: 'reset-password/:uid/:token', component: ResetPasswordComponent },
+  { path: 'reset-password/email', component: ResetPasswordEmailComponent },
 ];
 
 @NgModule({

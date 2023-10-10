@@ -38,7 +38,8 @@ import { WatchlistComponent } from './watchlist/watchlist.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BlacklistComponent } from './blacklist/blacklist.component';
 import { AuthdialogComponent } from './authdialog/authdialog.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component'; 
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordEmailComponent } from './reset-password-email/reset-password-email.component'; 
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     BlacklistComponent,
     AuthdialogComponent,
     ResetPasswordComponent,
+    ResetPasswordEmailComponent,
     
   ],
   imports: [
