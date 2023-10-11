@@ -1,7 +1,7 @@
 // reset-password.component.ts
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ResetPasswordService } from '../reset-password.service';
 
 @Component({
@@ -13,10 +13,12 @@ export class ResetPasswordComponent implements OnInit {
   token!: string;
   password: string = '';
   repeatPassword: string = '';
+  errorMessagePassword: string[] = []; 
   errorMessage: string = ''; 
   successMessage: string = '';
+  showPassword: boolean = false;
 
-  constructor(private resetPasswordService: ResetPasswordService, private route: ActivatedRoute) {}
+  constructor(private resetPasswordService: ResetPasswordService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     // Obtiene los valores uid y token de la URL
@@ -34,14 +36,28 @@ export class ResetPasswordComponent implements OnInit {
       .subscribe(
         (response) => {
           this.errorMessage = '';
+          this.errorMessagePassword =[] ;
           console.log(response);
-          // Manejar la respuesta exitosa (por ejemplo, redirigir a la página de inicio de sesión)
-        },
+          this.successMessage = 'Contraseña restablecida con éxito. Redirigiendo a la página de inicio de sesión...';
+          // Redirigir a la página de inicio de sesión después de un breve período
+          setTimeout(() => {
+            this.router.navigate(['']);
+          }, 3000); // Redirige después de 3 segundos (puedes ajustar el tiempo)
+          },
         (error) => {
-          this.errorMessage = error.error.message;
-          console.log(error);
+          if  (error.error.new_password) {
+            this.errorMessagePassword = error.error.new_password; 
+            this.errorMessage = '';
+          } else {
+            this.errorMessagePassword = [];
+            this.errorMessage = 'Error al restablecer la contraseña';
+          }
+          
           // Manejar errores (por ejemplo, mostrar un mensaje de error al usuario)
         }
       );
+  }
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

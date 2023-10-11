@@ -27,7 +27,7 @@
       
   
 <div class="button_container">
-      <button  class="button_navigate" mat-raised-button color="primary"  type="cancel" routerLink="/subscription">Volver</button>
+      <button  class="button_navigate" mat-raised-button color="primary"  type="cancel"  (click)="goBack()">Volver</button>
       <button  class="button_navigate" mat-raised-button color="primary" [disabled]="isNextButtonDisabled" type="submit">Siguiente</button>
       
     </div>

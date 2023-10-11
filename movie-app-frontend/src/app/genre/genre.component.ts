@@ -52,9 +52,9 @@ export class GenreComponent implements OnInit {
   }
 
   private updateNextButtonState(): void {
-    console.log("Update button call");
+    
     this.isNextButtonDisabled = this.genres.every(genre => !genre.selected);
-    console.log(this.isNextButtonDisabled);
+    
 
   }
 
@@ -82,6 +82,9 @@ export class GenreComponent implements OnInit {
      this.selectAll = this.genres.every(genres => genres.selected);
   }
   
+  goBack() {
+    this.router.navigate(['/subscription']); // Reemplaza 'pagina-anterior' con la ruta de tu página anterior
+  }
  
  
   
