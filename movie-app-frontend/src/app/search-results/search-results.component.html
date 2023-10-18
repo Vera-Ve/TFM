@@ -3,7 +3,7 @@
 <div *ngIf="filteredMovies.length > 0" class="container center">
   
   
-    <h2>{{ filteredMovies[currentMovieIndex].title }}</h2>
+    <h2 class="text_movie_title">{{ filteredMovies[currentMovieIndex].title }}</h2>
    
     <div class="button-container">
      
@@ -30,10 +30,10 @@
         <mat-icon aria-label="Siguiente">keyboard_arrow_right</mat-icon>
       </button>
   </div>
-  <p>{{ filteredMovies[currentMovieIndex].overview }}</p>
-  <p>Average vote:{{ filteredMovies[currentMovieIndex].vote_average}}</p>
-  <p>Popularity:{{ filteredMovies[currentMovieIndex].popularity}}</p>
-  <p>Géneros:
+  <p class="text_movie_details">{{ filteredMovies[currentMovieIndex].overview }}</p>
+  <p class="text_movie_details">Average vote:{{ filteredMovies[currentMovieIndex].vote_average}}</p>
+  <p class="text_movie_details">Popularity:{{ filteredMovies[currentMovieIndex].popularity}}</p>
+  <p class="text_movie_details">Géneros:
     <span *ngFor="let genreId of filteredMovies[currentMovieIndex].genre_ids">
       {{ getGenreName(genreId) }}
     </span>

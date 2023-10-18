@@ -86,9 +86,14 @@ WSGI_APPLICATION = 'movie_app_backend.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+ 'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'movies',
+        'USER': 'root',
+        'PASSWORD': 'CaraAcelga1991',
+        'HOST': 'localhost',
+        'PORT': '3306'
+
     }
 }
 
@@ -196,7 +201,7 @@ SIMPLE_JWT = {
 }
 
 
-DOMAIN = 'localhost:4200'
+DOMAIN = 'http:/localhost:4200'
 SITE_NAME = 'MUMÚ'
 
 DJOSER = {
@@ -223,8 +228,8 @@ EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'AKIAVBRNWFLQTD44KTOS'
+EMAIL_HOST_PASSWORD = 'BJXTnfRjMYBr57j9dP7ijXQSK43bFKEC/gdVAmo1Wqsn'
 
 
 

@@ -1,11 +1,11 @@
 <app-navbar></app-navbar>
 <div class="container center">
     
-    <h2>Blacklist</h2>
+    <h2 class="text_movie_title">Mi Blacklist</h2>
    
   <!-- Lista de películas en la blacklist -->
   <div *ngFor="let movie of blacklist" class="movie-container">
-    <h2>{{ movie.title }}</h2>
+    <h2 class="text_movie_title">{{ movie.title }}</h2>
     
     <!-- Contenedor para la imagen de la película y el botón de eliminar -->
     <div class="movie-details">
@@ -17,8 +17,8 @@
         <mat-icon>cancel</mat-icon>
       </button>
     </div>
-    <div> <p>{{ movie.overview }}</p>
-      <p>LkbyfS{{ blacklist.length }}</p>
+    <div> <p class="text_movie_details">{{ movie.overview }}</p>
+     
     </div>
     <!-- Descripción de la película -->
    

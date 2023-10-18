@@ -25,7 +25,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-#from djoser.views import PasswordResetView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,7 +33,7 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
-   # path('api/users/reset_password/', PasswordResetView.as_view(), name='password-reset'),
+   
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
    
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),

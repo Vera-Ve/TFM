@@ -1,10 +1,10 @@
 <app-navbar></app-navbar>
 <div class="container center">
     
-    <h2>Watchlist</h2>
+    <h2 class="text_list_title">Mi Watchlist</h2>
   <!-- Lista de películas en la watchlist -->
   <div *ngFor="let movie of watchlist" class="movie-container">
-    <h2>{{ movie.title }}</h2>
+    <h2 class="text_movie_title">{{ movie.title }}</h2>
     
     <!-- Contenedor para la imagen de la película y el botón de eliminar -->
     <div class="movie-details">
@@ -18,7 +18,8 @@
     </div>
     
     <!-- Descripción de la película -->
-    <p>{{ movie.overview }}</p>
+    <p class="text_movie_details">{{ movie.overview }}</p>
+    
   </div>
 
   <!-- Mensaje si no hay películas en la watchlist -->

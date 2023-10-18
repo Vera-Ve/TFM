@@ -47,8 +47,13 @@ mat-card {
 
 .show-error {
   /* Estilo cuando se muestra el mensaje de error */
-  opacity: 1;
+  visibility: visible;
 }
+
+.show-message {
+  /* Estilo cuando se muestra el mensaje de error */
+  visibility: visible;
+  }
 
 
 
